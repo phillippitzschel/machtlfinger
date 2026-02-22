@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <title>MVV Abfahrten (Homey Widget)</title>
+
+  <style>
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;            /* keine Scrollbars im Widget */
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: transparent;     /* Homey-Hintergrund nutzen */
+    }
+
+    .wrap {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: stretch;
+      justify-content: stretch;
+      box-sizing: border-box;
+    }
+
+    .card {
+      flex: 1 1 auto;
+      min-height: 0;
+      min-width: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(0,0,0,0.10);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .mvv-departure-monitor {
+      height: 100%;
+      width: 100%;
+    }
+
+    .fallback {
+      display: none;
+      height: 100%;
+      width: 100%;
+      padding: 12px;
+      box-sizing: border-box;
+      color: #fff;
+      background: rgba(0,0,0,0.25);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .show-fallback .fallback { display: block; }
+    .show-fallback .card { display: none; }
+  </style>
+</head>
+
+<body>
+  <div id="root" class="wrap">
+    <div class="card">
+      <div
+        class="mvv-departure-monitor"
+        monitor-configuration="eyJsYW5ndWFnZSI6eyJkZXBhcnR1cmUiOiJBYmZhaHJ0IiwidHJhaW5TdG9wcyI6IkhhbHRlc3RlbGxlbiIsImRpcmVjdGlvbiI6IlJpY2h0dW5nIiwiZm9vdGVyTm90ZSI6IqkgQ29weXJpZ2h0IiwiZm9vdGVyVGV4dCI6IldlaXRlcmUgRmFocnBsYW5hdXNr/G5mdGUgdW50ZXIgd3d3Lm12di1hdXNrdW5mdC5kZSBvZGVyIG1pdCBkZXIgTVZWLUFwcCIsImhlYWRlclRleHQiOiJBYmZhaHJ0ZW4gZvxyIGhldXRlLCAiLCJsYW5ndWFnZSI6ImRlIiwibGluZSI6IkxpbmllIiwibGl2ZSI6IkxpdmUiLCJzdG9wIjoiSGFsdGVzdGVsbGUiLCJ0cmFjayI6IkdsZWlzIn0sImlzRnVsbHNjcmVlbiI6ZmFsc2UsInN0YXRpb25zIjpbeyJzdGF0aW9uIjp7InVzYWdlIjoic2YiLCJ0eXBlIjoiYW55IiwibmFtZSI6Ik38bmNoZW4sIE1hY2h0bGZpbmdlciBTdHJh32UiLCJzdGF0ZWxlc3MiOiI5MTAwMTQ3MCIsImFueVR5cGUiOiJzdG9wIiwic29ydCI6IjIiLCJxdWFsaXR5IjoiNDU1IiwiYmVzdCI6IjAiLCJvYmplY3QiOiJNYWNodGxmaW5nZXIgU3RyYd9lIiwibWFpbkxvYyI6Ik38bmNoZW4iLCJtb2RlcyI6IjIsNSIsInJlZiI6eyJpZCI6IjkxMDAxNDcwIiwiZ2lkIjoiZGU6MDkxNjI6MTQ3MCIsIm9tYyI6IjkxNjIwMDAiLCJwbGFjZUlEIjoiMSIsInBsYWNlIjoiTfxuY2hlbiIsImNvb3JkcyI6IjEyODE3NDEuMDAwMDAsNTg3Njk1Ni4wMDAwMCJ9LCJpZCI6ImRlOjA5MTYyOjE0NzAifSwibGluZXMiOlt7Im51bWJlciI6IlUzIiwic3ltYm9sIjoiMDEwVTMuc3ZnIiwiZGlyZWN0aW9uIjoiTW9vc2FjaCIsInN0YXRlbGVzcyI6InN3bTowMTBVMzpHOlI6MDE2IiwibmFtZSI6IlUtQmFobiJ9XSwiYWxsTGluZXMiOlt7Im51bWJlciI6IlUzIiwic3ltYm9sIjoiMDEwVTMuc3ZnIiwiZGlyZWN0aW9uIjoiRvxyc3RlbnJpZWQgV2VzdCIsInN0YXRlbGVzcyI6InN3bTowMTBVMzpHOkg6MDE2IiwibmFtZSI6IlUtQmFobiJ9LHsibnVtYmVyIjoiVTMiLCJzeW1ib2wiOiIwMTBVMy5zdmciLCJkaXJlY3Rpb24iOiJNb29zYWNoIiwic3RhdGVsZXNzIjoic3dtOjAxMFUzOkc6UjowMTYiLCJuYW1lIjoiVS1CYWhuIn0seyJudW1iZXIiOiI1MSIsInN5bWJvbCI6IjI0MDUxLnN2ZyIsImRpcmVjdGlvbiI6IkFpZGVuYmFjaHN0cmHfZSIsInN0YXRlbGVzcyI6InN3bTowMzA1MTpHOkg6MDE2IiwibmFtZSI6Ik1ldHJvQnVzIn0seyJudW1iZXIiOiI1MSIsInN5bWJvbCI6IjI0MDUxLnN2ZyIsImRpcmVjdGlvbiI6Ik1vb3NhY2giLCJzdGF0ZWxlc3MiOiJzd206MDMwNTE6RzpSOjAxNiIsIm5hbWUiOiJNZXRyb0J1cyJ9XSwibGVhZFRpbWVNaW51dGVzIjowfV0sImxpbmVzIjpbXSwibWF4UmVzdWx0cyI6NSwiZmV0Y2hJbnRlcnZhbEluTWludXRlcyI6Miwic2hvd05vdGlmaWNhdGlvbiI6dHJ1ZX0="
+      ></div>
+    </div>
+
+    <div class="fallback">
+      <strong>MVV Widget konnte nicht geladen werden.</strong><br>
+      Prüfe, ob externe Skripte in Homey erlaubt sind und ob die URL erreichbar ist.
+    </div>
+  </div>
+
+  <script
+    src="https://www.mvv-muenchen.de/typo3conf/ext/sn_mvv_efa/Resources/Public/mvv-monitor/mvv-monitor.min.js"
+    referrerpolicy="no-referrer"
+  ></script>
+
+  <script>
+    (function () {
+      const root = document.getElementById("root");
+
+      const t = setTimeout(() => {
+        const monitor = document.querySelector(".mvv-departure-monitor");
+        const hasContent = monitor && monitor.children && monitor.children.length > 0;
+        if (!hasContent) root.classList.add("show-fallback");
+      }, 3000);
+
+      window.addEventListener("load", () => clearTimeout(t));
+    })();
+  </script>
+</body>
+</html>
