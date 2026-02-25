@@ -1,1 +1,54 @@
-<div id="ww_23d2e281de195" v='1.3' loc='id' a='{"t":"horizontal","lang":"de","sl_lpl":1,"ids":["wl1545"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722","el_phw":3}'>Mehr Vorhersagen: <a href="https://wetterlabs.de/" id="ww_23d2e281de195_u" target="_blank">Wetter Labs</a></div><script async src="https://app3.weatherwidget.org/js/?id=ww_23d2e281de195"></script>
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Wetter Widget</title>
+    <style>
+      /* Homey-Widget: möglichst "edge-to-edge" */
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+      }
+
+      /* Optional: etwas Padding – kannst du auf 0 setzen */
+      .container {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        box-sizing: border-box;
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+      }
+
+      /* Das eingebettete Widget soll sich ausdehnen */
+      #ww_23d2e281de195 {
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div
+        id="ww_23d2e281de195"
+        v="1.3"
+        loc="id"
+        a='{"t":"horizontal","lang":"de","sl_lpl":1,"ids":["wl1545"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722","el_phw":3}'
+      >
+        Mehr Vorhersagen:
+        <a href="https://wetterlabs.de/" id="ww_23d2e281de195_u" target="_blank" rel="noopener noreferrer">
+          Wetter Labs
+        </a>
+      </div>
+    </div>
+
+    <script async src="https://app3.weatherwidget.org/js/?id=ww_23d2e281de195"></script>
+  </body>
+</html>
